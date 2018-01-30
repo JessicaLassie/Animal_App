@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Les cris des animaux
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -12,3 +12,10 @@
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
   </p>
 </ion-content>
+
+<ion-footer padding>
+  <button ion-button full round color="secondary" (click)="playSound()">
+    Jouer un son&nbsp;&nbsp;
+    <ion-icon name="volume-up"></ion-icon>
+  </button>
+</ion-footer>
