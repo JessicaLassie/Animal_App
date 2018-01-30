@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
+import { POINTER_EVENT_TYPE_MOUSE } from 'ionic-angular/gestures/pointer-events';
 
 @Component({
   selector: 'page-home',
@@ -73,10 +75,11 @@ export class HomePage {
     }
   ];
 
-  private currentPosition: number;
+  private currentAnimal;
   public result: string;
+  public showReorder = false;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {
 
   }
 
@@ -84,14 +87,16 @@ export class HomePage {
    * Choix aleatoire d'un animal
    * si aucun choix préalable
    */
-  pickAnimalPosition() {
+  pickAnimal() {
     let pos;
-    if (!this.currentPosition) {
+    let animal;
+    if (!this.currentAnimal) {
       pos = Math.floor(Math.random() * this.animals.length);
+      animal = this.animals[pos];
     } else {
-      pos = this.currentPosition;
+      animal = this.currentAnimal;
     }
-    return pos;
+    return animal;
   }
 
   /**
@@ -100,11 +105,10 @@ export class HomePage {
   playSound() {
     this.result = "";
     // Choix d'un animal
-    this.currentPosition = this.pickAnimalPosition();
-    let choosenAnimal = this.animals[this.currentPosition];
+    this.currentAnimal = this.pickAnimal();
     // Chargement du son
     let audio = new Audio();
-    audio.src = 'assets' + choosenAnimal.file;
+    audio.src = 'assets' + this.currentAnimal.file;
     audio.load();
     // Lecture du son
     audio.play();
@@ -113,18 +117,28 @@ export class HomePage {
   /**
    * Deviner l'animal en fonction de son cri
    */
-  guess(pos) {
+  guess(animalName) {
     // Test si on a joué un son
-    if (this.currentPosition) {
+    if (this.currentAnimal) {
       // Test si on a choisi le bon animal
-      if (pos == this.currentPosition) {
-        this.result = "Gagné";
+      if (animalName == this.currentAnimal.title) {
+        this.presentToast('Gagné !');
         // Reinitialisation du choix pour faire un nouveau jeu
-        this.currentPosition = null;
+        this.currentAnimal = null;
       } else {
-        this.result = "Essaie encore";
+        this.presentToast('Essaie encore !');
       }
     }
+  }
+
+  presentToast(texte) {
+    let toast = this.toastCtrl.create({
+      message: texte,
+      duration: 2000,
+      position: 'middle',
+      cssClass: 'styleToast'
+    });
+    toast.present();
   }
 
 }

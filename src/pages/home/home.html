@@ -1,20 +1,20 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Les cris des animaux
-      <ion-buttons end>
-        <button ion-button (click)="showReorder = ! showReorder">
-          <ion-icon name="funnel"></ion-icon>
-        </button>
-      </ion-buttons>
+      Les animaux
     </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="showReorder = ! showReorder">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
     <ion-item-group [reorder]="showReorder" (ionItemReorder)="$event.applyTo(animals)">
-      <ion-item *ngFor="let animal of animals; let pos=index" (click)="guess(pos)">
+      <ion-item *ngFor="let animal of animals; let pos=index" (click)="guess(animal.title)">
         <ion-thumbnail item-left>
           <img src="/assets/{{animal.image}}">
         </ion-thumbnail>
@@ -26,7 +26,6 @@
 </ion-content>
 
 <ion-footer padding>
-  <p class="message">{{result}}</p>
   <button ion-button full round color="secondary" (click)="playSound()">
     Jouer un son&nbsp;&nbsp;
     <ion-icon name="volume-up"></ion-icon>
