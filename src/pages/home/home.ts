@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
-import { POINTER_EVENT_TYPE_MOUSE } from 'ionic-angular/gestures/pointer-events';
 
 @Component({
   selector: 'page-home',
@@ -79,28 +78,29 @@ export class HomePage {
   public result: string;
   public showReorder = false;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {
-
-  }
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {}
 
   /**
-   * Choix aleatoire d'un animal
-   * si aucun choix préalable
+   * Choix aleatoire d'un animal si aucun choix préalable
    */
   pickAnimal() {
     let pos;
     let animal;
+    // Test si aucun animal n'a encore été choisi
     if (!this.currentAnimal) {
+      // Détermination d'une position dans le tableau animals
       pos = Math.floor(Math.random() * this.animals.length);
+      // L'animal choisi est l'animal de la position déterminée précédemment
       animal = this.animals[pos];
     } else {
+      // L'animal choisi est l'animal courant
       animal = this.currentAnimal;
     }
     return animal;
   }
 
   /**
-   * Lecture d'un son
+   * Lecture du son correspondant à l'animal choisi aleatoirement
    */
   playSound() {
     this.result = "";
@@ -122,15 +122,20 @@ export class HomePage {
     if (this.currentAnimal) {
       // Test si on a choisi le bon animal
       if (animalName == this.currentAnimal.title) {
+        // Affichage du toast
         this.presentToast('Gagné !');
         // Reinitialisation du choix pour faire un nouveau jeu
         this.currentAnimal = null;
       } else {
+        // Affichage du toast
         this.presentToast('Essaie encore !');
       }
     }
   }
 
+  /**
+   * Toast
+   */
   presentToast(texte) {
     let toast = this.toastCtrl.create({
       message: texte,
