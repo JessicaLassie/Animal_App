@@ -134,7 +134,7 @@ export class HomePage {
   }
 
   /**
-   * Toast
+   * Affichage Toast
    */
   presentToast(texte) {
     let toast = this.toastCtrl.create({
