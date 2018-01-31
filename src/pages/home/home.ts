@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
+import { DetailsPage } from '../details/details';
 
 @Component({
   selector: 'page-home',
@@ -75,10 +76,11 @@ export class HomePage {
   ];
 
   private currentAnimal;
-  public result: string;
   public showReorder = false;
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {}
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {
+
+  }
 
   /**
    * Choix aleatoire d'un animal si aucun choix préalable
@@ -103,7 +105,6 @@ export class HomePage {
    * Lecture du son correspondant à l'animal choisi aleatoirement
    */
   playSound() {
-    this.result = "";
     // Choix d'un animal
     this.currentAnimal = this.pickAnimal();
     // Chargement du son
@@ -144,6 +145,13 @@ export class HomePage {
       cssClass: 'styleToast'
     });
     toast.present();
+  }
+
+  /**
+   * Afficher la page details de l'animal choisi
+   */
+  goToDetails(animal) {
+    this.navCtrl.push(DetailsPage, { data: animal });
   }
 
 }

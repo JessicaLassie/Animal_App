@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Détails</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <h1>{{animal.title}}</h1>
+    </ion-card-header>
+    <ion-card-content>
+      <h2>{{animal.desc}}</h2>
+      <img src="assets/{{animal.image}}">
+      <p>Source audio : {{animal.file}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
